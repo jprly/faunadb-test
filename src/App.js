@@ -8,6 +8,11 @@ function App() {
 const saveThought = () => console.log("Commiting thought to memory…")
 const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.target.value})
 
+fetch('/functions/post-memory/post-memory.js', {
+  method: 'POST',
+  body: JSON.stringify(thought)
+})
+
   return (
     <div className="App">
          <h1>Memories</h1>
