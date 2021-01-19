@@ -5,13 +5,15 @@ import React, { useState } from 'react';
 function App() {
 
   const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: '' });
-const saveThought = () => console.log("Commiting thought to memory…")
+const saveThought = () => {
+  fetch('/.netlify/functions/post-memory/', {
+    method: 'POST',
+    body: JSON.stringify(thought)
+  })
+}
 const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.target.value})
 
-fetch('/functions/post-memory/post-memory.js', {
-  method: 'POST',
-  body: JSON.stringify(thought)
-})
+
 
   return (
     <div className="App">
