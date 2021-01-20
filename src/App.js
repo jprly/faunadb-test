@@ -4,6 +4,14 @@ import React, { useState } from 'react';
 
 function App() {
 
+  //delete 
+  const deleteMemory = async memory => {
+    const resp = await fetch('.netlify/functions/delete-memory', {
+      method: 'DELETE',
+      body: JSON.stringify(memory)
+    })
+  }
+
 //get memories
 
 const [memories, setMemories] = useState()
@@ -12,7 +20,7 @@ const getMemories = async () => {
   const data = await resp.json()
   setMemories(data)
 }
-const memCard = (m, i) => <div key={i}>{m.data.text}</div>
+const memCard = (m, i) => <div key={i}>{ '✏️ ' + m.data.text + ' 📆 ' + m.data.text}<span onClick={() => deleteMemory(m)}>🗑</span></div>
 const renderMemories = memories ? memories.map(memCard) : <button onClick={getMemories}>Show memories</button>
 
  //save memories
