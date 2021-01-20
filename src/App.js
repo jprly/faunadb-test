@@ -8,7 +8,7 @@ function App() {
 
 const [memories, setMemories] = useState()
 const getMemories = async () => {
-  const resp = await fetch('/api/memories')
+  const resp = await fetch('.netlify/functions/memories')
   const data = await resp.json()
   setMemories(data)
 }
@@ -18,7 +18,7 @@ const renderMemories = memories ? memories.map(memCard) : <button onClick={getMe
  //save memories
   const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: '' });
   const saveThought = async () => {
-  await fetch('/api/post-memory', { method: 'POST', body: JSON.stringify(thought)})
+  await fetch('.netlify/functions/post-memory', { method: 'POST', body: JSON.stringify(thought)})
   .then((resp)=>{resp.json()})
   .then((res) => console.log(res))
   .catch((error) => console.log(error));
