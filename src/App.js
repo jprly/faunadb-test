@@ -10,6 +10,7 @@ function App() {
       method: 'DELETE',
       body: JSON.stringify(memory)
     })
+    console.log(res);
   }
 
 //get memories
