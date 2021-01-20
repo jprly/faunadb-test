@@ -6,7 +6,7 @@ function App() {
 
   const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: '' });
 const saveThought = () => {
-  fetch('/.netlify/functions/post-memory/', {
+  fetch('/.netlify/functions/post-memory', {
     method: 'POST',
     body: JSON.stringify(thought)
   })
