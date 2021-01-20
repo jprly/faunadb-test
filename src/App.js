@@ -17,13 +17,15 @@ const renderMemories = memories ? memories.map(memCard) : <button onClick={getMe
 
  //save memories
   const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: '' });
-  const saveThought = () => {
+  const saveThought = async () => {
   const resp = await fetch('/api/post-memory', {
     method: 'POST',
     body: JSON.stringify(thought)
-  })
-  const { error, message } = await resp.json()
-  error ? console.error(error) : console.log(message)
+  }).then((resp)=>{
+    resp.json()
+  }).then((res) => console.log(res))
+  .catch((error) => console.log(error));
+
 }
 const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.target.value})
 
@@ -35,6 +37,8 @@ const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.tar
     <input type="date" name="date" value={thought.date} onChange={handleThoughtChange}/>
     <input type="text" name="text" placeholder="Your thought" value={thought.text} onChange={handleThoughtChange}/>
     <button onClick={saveThought}>Commit to memory</button>
+    <div id="memories">{ renderMemories }</div>
+
     </div>
   );
 }
