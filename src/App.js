@@ -4,8 +4,20 @@ import React, { useState } from 'react';
 
 function App() {
 
+//get memories
+
+const [memories, setMemories] = useState()
+const getMemories = async () => {
+  const resp = await fetch('/api/memories')
+  const data = await resp.json()
+  setMemories(data)
+}
+const memCard = (m, i) => <div key={i}>{m.data.text}</div>
+const renderMemories = memories ? memories.map(memCard) : <button onClick={getMemories}>Show memories</button>
+
+ //save memories
   const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: '' });
-const saveThought = () => {
+  const saveThought = () => {
   const resp = await fetch('/api/post-memory', {
     method: 'POST',
     body: JSON.stringify(thought)
